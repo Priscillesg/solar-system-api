@@ -1,4 +1,4 @@
-from flask import jsonify
+from app.models.planet import Planet
 
 def test_get_all_planets_with_no_records(client):
     # Act
@@ -9,15 +9,15 @@ def test_get_all_planets_with_no_records(client):
     assert response.status_code == 200
     assert response_body == []
 
-def test_get_one_planet(client):
+def test_get_one_planet(client, two_saved_planets):
     # Act
     response = client.get("/planets/2")
     response_body = response.get_json()
 
     # Assert
-    assert response.status_code == 404
+    assert response.status_code == 200
     assert response_body == {
-        "id": "2",
+        "id": 2,
         "name": "Mars",
         "description": "Planet Mars"
     }
@@ -31,18 +31,18 @@ def test_get_one_planet_no_record(client):
     assert response.status_code == 404
     assert response_body == None
 
-def test_get_all_planets_with_records(client):
+def test_get_all_planets_with_records(client, two_saved_planets):
     # Act
     response = client.get("/planets")
     response_body = response.get_json()
 
     # Assert
     assert response.status_code == 200
-    assert response_body == jsonify([{
-        "id": "planet.id",
-        "name": "planet.name",
-        "description": "planet.description"
-    }])
+    assert response_body == [{
+        "id": response_body["id"],
+        "name": response_body["name"],
+        "description": response_body["description"]
+    }]
 
 def test_post_planets(client, planet_data):
     # Act

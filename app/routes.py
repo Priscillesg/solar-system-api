@@ -15,10 +15,7 @@ def handle_planets(planet_id):
             "name": planet.name,
             "description": planet.description
         }, 200)
-    # return{
-    #     "message": f"Planet {planet_id} not found",
-    #     "success": False,
-    #     }, 404
+
     elif request.method == "PUT":
             
         planet_data = request.get_json()
@@ -57,5 +54,5 @@ def planets():
                                                     )
         db.session.add(new_planet)
         db.session.commit()
-        return make_response('planet #{new_planet.name} has been created', 201)
+        return make_response(f'planet #{new_planet.name} has been created', 201)
 
