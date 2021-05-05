@@ -33,16 +33,15 @@ def test_get_one_planet_no_record(client):
 
 def test_get_all_planets_with_records(client, two_saved_planets):
     # Act
-    response = client.get("/planets")
+    response = client.get("/planets",two_saved_planets)
     response_body = response.get_json()
 
     # Assert
     assert response.status_code == 200
-    assert response_body == [{
-        "id": response_body["id"],
-        "name": response_body["name"],
-        "description": response_body["description"]
-    }]
+    assert response_body == [{'description': 'Planet Mercury', 'id': 1, 'name': 'Mercury'},
+                    {'description': 'Planet Mars', 'id': 2, 'name': 'Mars'}]
+
+
 
 def test_post_planets(client, planet_data):
     # Act
@@ -51,4 +50,4 @@ def test_post_planets(client, planet_data):
 
     # Assert
     assert response.status_code == 201
-    assert response_body == f'planet #{new_planet.name} has been created', 201
+    assert response_body == f'planet {new_planet.name} has been created', 201

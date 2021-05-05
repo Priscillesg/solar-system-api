@@ -2,7 +2,7 @@ import pytest
 from app import create_app
 from app import db
 from app.models.planet import Planet
-
+from flask import jsonify
 
 
 @pytest.fixture
@@ -35,7 +35,9 @@ def two_saved_planets(app):
 @pytest.fixture
 def planet_data(app):
     return {
-"name": "Uranus",
-"description": "Planet Uranus"
+    "name": "Uranus",
+    "description":"Planet Uranus"
 }
+
+
 
