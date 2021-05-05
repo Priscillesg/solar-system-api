@@ -50,4 +50,4 @@ def test_post_planets(client, planet_data):
 
     # Assert
     assert response.status_code == 201
-    assert response_body == f'planet {new_planet.name} has been created', 201
+    assert response_body == f'planet Uranus has been created'
